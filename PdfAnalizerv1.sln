@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfAnalizerv1", "PdfAnalizerv1\PdfAnalizerv1.csproj", "{3FCFB571-D508-483E-AD65-F4D3D8F56463}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FCFB571-D508-483E-AD65-F4D3D8F56463}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{3FCFB571-D508-483E-AD65-F4D3D8F56463}.Debug|anycpu.Build.0 = Debug|anycpu
+		{3FCFB571-D508-483E-AD65-F4D3D8F56463}.Release|anycpu.ActiveCfg = Release|anycpu
+		{3FCFB571-D508-483E-AD65-F4D3D8F56463}.Release|anycpu.Build.0 = Release|anycpu
+	EndGlobalSection
+EndGlobal
