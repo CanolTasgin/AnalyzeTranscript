@@ -4,19 +4,33 @@ using System.Collections.Generic;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 
+/*
+Purpose of the code:
+Converting transcript file taken from Sabanci University and extract passed course infromations
+
+How it works:
+Reads a pdf from local folder with its path
+Uses iTextSharp Library to convert pdf file to string
+Analizes it and prints passed course codes and grades to console
+
+
+Necessary Updates:
+Create a struct for course information & use it with hashtable - Course code, course credit, course name, earned grade (to compare directly with graduation requirements)
+*/
+
+
 namespace PdfAnalizerv1
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            string transcriptStr = pdfText(@"/Users/canoltasgin/Desktop/transcript");
+            string transcriptStr = pdfText(@"/Users/canoltasgin/Desktop/transcript"); //Converts the pdf from the path
 
             using (System.IO.StreamWriter file =
            new System.IO.StreamWriter(@"/Users/canoltasgin/Desktop/transcript.txt"))
             {
-                file.WriteLine(transcriptStr);
+                file.WriteLine(transcriptStr); //write string version to a txt file to examine
             }
             analizePdf(transcriptStr);
         }
@@ -25,7 +39,7 @@ namespace PdfAnalizerv1
         {
             PdfReader reader = new PdfReader(path);
             string text = string.Empty;
-            for (int page = 1; page <= reader.NumberOfPages; page++)
+            for (int page = 1; page <= reader.NumberOfPages; page++) //convert all pages in the pdf file
             {
                 text += PdfTextExtractor.GetTextFromPage(reader, page);
             }
@@ -33,7 +47,7 @@ namespace PdfAnalizerv1
             return text;
         }
 
-        static Hashtable previousClasses;
+        static Hashtable previousClasses; //HashTable for taken classes
 
         public static void analizePdf(string transcript)
         {
@@ -50,7 +64,7 @@ namespace PdfAnalizerv1
             for (int i = 12; i > 0; i--)
                 entryYear += transcript[a - i];
 
-              Console.WriteLine(entryYear);
+            //   Console.WriteLine(entryYear);
             
               for (int index = 0; ; index += "Program(s) :".Length)
             {
@@ -62,7 +76,7 @@ namespace PdfAnalizerv1
             for (; b < a - entryYear.Length; b++)
                 program += transcript[b];
 
-            Console.WriteLine(program);
+            // Console.WriteLine(program);
 
             previousClasses = new Hashtable();
 
@@ -88,7 +102,7 @@ namespace PdfAnalizerv1
                     {
                         if (int.TryParse(word, out value)) // if 2nd word can become an integer
                         {
-                            if (tempLine.Contains("UG") && tempLine.Contains("Repeated") == false)
+                            if (tempLine.Contains("UG") && !tempLine.Contains("Repeated"))
                             {
                                 className = tempLine.Substring(1, tempLine.IndexOf(word) + word.Length - 1);
                                 lines.Add(tempLine);
@@ -100,7 +114,6 @@ namespace PdfAnalizerv1
                                         restOfInfo = "? " + restOfInfo.Substring(2,restOfInfo.Length-2);
                                     }
                                     previousClasses.Add(className, restOfInfo.Substring(0, 2));
-                                    //Console.WriteLine(className + "/ / / / / " + restOfInfo);
                                 }
                             }
                         }
@@ -108,20 +121,11 @@ namespace PdfAnalizerv1
                     counter++;
                 }   
             }
-
             foreach (DictionaryEntry entry in previousClasses)
             {
                 Console.WriteLine("Course Code: " + entry.Key + "/ Grade: " + entry.Value);
             }
-
-            //Hashtable a eklemeden once DERS KODU - DERS ADI - DERS KREDISI - DERSTEN ALINAN NOT olarak 4 ayri stringle bi struct olustur.
-            //Transcript derslerini en son halde Hash Table olarak kur. Boylece sonrasinda mezuniyet yukumluluklerinde gerekenlerle direkt karsilastirilabilir.
-
             Console.WriteLine();
-
-
-            //Tek tek tum line lara bak. Eger ikinci kelime 3 haneli integersa List e ekle. Daha sonra Liste eklenenlerin icerigini duzenle.
-
         }
     }
 }
