@@ -122,8 +122,6 @@ namespace PdfAnalizerv1
 
             //Tek tek tum line lara bak. Eger ikinci kelime 3 haneli integersa List e ekle. Daha sonra Liste eklenenlerin icerigini duzenle.
 
-
-            
         }
     }
 }
